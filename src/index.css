@@ -1,0 +1,96 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    @apply antialiased selection:bg-blue-600 selection:text-white bg-slate-950 text-slate-100;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+  
+  h1, h2, h3, h4, .font-heading {
+    font-family: 'Outfit', 'Inter', sans-serif;
+  }
+
+  .font-mono-code {
+    font-family: 'JetBrains Mono', monospace;
+  }
+}
+
+/* Custom sleek scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.6);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(59, 130, 246, 0.5);
+  border-radius: 9999px;
+  border: 2px solid rgba(15, 23, 42, 0.2);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(59, 130, 246, 0.8);
+}
+
+/* Always-visible horizontal scrollbar for tables */
+.table-scrollbar {
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(59, 130, 246, 0.6) rgba(15, 23, 42, 0.4);
+}
+
+.table-scrollbar::-webkit-scrollbar {
+  height: 10px;
+  display: block !important;
+}
+
+.table-scrollbar::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.6);
+  border-radius: 6px;
+  margin: 0 4px;
+}
+
+.table-scrollbar::-webkit-scrollbar-thumb {
+  background: #2563EB;
+  border-radius: 6px;
+  border: 2px solid #0F172A;
+}
+
+/* Print Isolation for Bank Advice & Consolidated Proformas */
+@media print {
+  body {
+    background-color: white !important;
+    color: black !important;
+  }
+  nav, footer, .print-hidden, button {
+    display: none !important;
+  }
+  .print-only {
+    display: block !important;
+  }
+  .print-container {
+    padding: 0 !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+    background: white !important;
+    color: black !important;
+    width: 100% !important;
+  }
+  table {
+    page-break-inside: auto;
+  }
+  tr {
+    page-break-inside: avoid;
+    page-break-after: auto;
+  }
+  @page {
+    size: A4 landscape;
+    margin: 8mm;
+  }
+}
