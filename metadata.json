@@ -1,0 +1,6 @@
+{
+  "name": "e-Salary Management System - TEVTA Faisalabad & Chiniot v1.0",
+  "description": "e-Salary Management System developed by MKZ for District Director Office TEVTA Faisalabad & Chiniot v1.0",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -219,6 +219,12 @@ export const ConsolidatedExportModal: React.FC<ConsolidatedExportModalProps> = (
             </table>
           </div>
 
+          {/* Document System Footer */}
+          <div className="mt-8 pt-2 border-t border-gray-300 flex justify-between items-center text-[9px] text-gray-500 font-mono">
+            <span>e-Salary Management System developed by MKZ for District Director Office TEVTA Faisalabad & Chiniot v1.0</span>
+            <span>Generated on: {new Date().toLocaleDateString('en-GB')}</span>
+          </div>
+
         </div>
 
       </div>

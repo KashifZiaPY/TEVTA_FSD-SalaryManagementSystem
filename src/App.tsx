@@ -6,10 +6,38 @@ import { LoginModal } from './components/LoginModal';
 import { BankAdviceModal } from './components/BankAdviceModal';
 import { ConsolidatedExportModal } from './components/ConsolidatedExportModal';
 import { SettingsModal } from './components/SettingsModal';
+import { AnimatedSplashLogos } from './components/AnimatedSplashLogos';
 import { StorageService, syncWithGoogleSheet } from './services/apiService';
 import { Institute, StaffMember, MonthlyTransaction, SystemConfig, UserSession } from './types/payroll';
 
 export function App() {
+  // Theme state: default to 'dark', with persistence in localStorage
+  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
+    const saved = localStorage.getItem('tevta_theme');
+    if (saved === 'light' || saved === 'dark') return saved;
+    return 'dark';
+  });
+
+  // Sync theme class to document.documentElement
+  useEffect(() => {
+    const root = document.documentElement;
+    if (theme === 'dark') {
+      root.classList.add('dark');
+      root.classList.remove('light');
+    } else {
+      root.classList.add('light');
+      root.classList.remove('dark');
+    }
+    localStorage.setItem('tevta_theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(prev => (prev === 'dark' ? 'light' : 'dark'));
+  };
+
+  // Startup initialization state (identical to GVTIW Executive Budget Dashboard)
+  const [isInitializing, setIsInitializing] = useState<boolean>(true);
+
   // State from Storage Service
   const [config, setConfig] = useState<SystemConfig>(StorageService.getConfig());
   const [institutes, setInstitutes] = useState<Institute[]>(StorageService.getInstitutes());
@@ -17,21 +45,29 @@ export function App() {
   const [transactions, setTransactions] = useState<MonthlyTransaction[]>(StorageService.getTransactions());
 
   // Navigation & Sessions
-  // Default session starts with GVITW Samanabad (33028) so the app opens immediately into an interactive view!
+  // Default session starts with District Director Office, Faisalabad & Chiniot
   const [session, setSession] = useState<UserSession>({
-    role: 'INSTITUTE',
-    instituteCode: '33028',
-    instituteName: 'GVTIW Samanabad Faisalabad',
+    role: 'DISTRICT_ADMIN',
+    instituteCode: 'CENTRAL-DD',
+    instituteName: 'Office of the District Director, TEVTA Faisalabad & Chiniot',
     district: 'Faisalabad',
-    userName: 'Principal GVTIW'
+    userName: 'DD Office Admin'
   });
-  const [activeTab, setActiveTab] = useState<'INSTITUTE' | 'ADMIN'>('INSTITUTE');
+  const [activeTab, setActiveTab] = useState<'INSTITUTE' | 'ADMIN'>('ADMIN');
 
   // Modals state
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isBankAdviceOpen, setIsBankAdviceOpen] = useState(false);
   const [consolidatedModalType, setConsolidatedModalType] = useState<'DW' | 'VISITING' | null>(null);
+
+  // Initial startup timer (smooth entry experience matching the budget dashboard)
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsInitializing(false);
+    }, 2200);
+    return () => clearTimeout(timer);
+  }, []);
 
   // Active current institute
   const currentInstitute = institutes.find(i => i.code === (session.instituteCode || '33028')) || institutes[0];
@@ -86,8 +122,20 @@ export function App() {
     }
   };
 
+  if (isInitializing) {
+    return (
+      <AnimatedSplashLogos
+        punjabLogo="/gop-logo.png"
+        tevtaLogo="/tevta-logo.png"
+        officeName="Office of the District Director, TEVTA Faisalabad & Chiniot"
+        darkMode={theme === 'dark'}
+        onSkip={() => setIsInitializing(false)}
+      />
+    );
+  }
+
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans">
+    <div className={`min-h-screen ${theme === 'dark' ? 'bg-slate-950 text-slate-100' : 'bg-slate-50 text-slate-900'} flex flex-col font-sans transition-colors duration-150`}>
       
       {/* Official Top Navigation */}
       <Navbar
@@ -101,6 +149,9 @@ export function App() {
         onOpenSettings={() => setIsSettingsOpen(true)}
         activeTab={activeTab}
         setActiveTab={setActiveTab}
+        onReplaySplash={() => setIsInitializing(true)}
+        theme={theme}
+        onToggleTheme={toggleTheme}
       />
 
       {/* Main Workspace Body */}
@@ -129,18 +180,18 @@ export function App() {
 
       {/* Official Corporate Footer */}
       <footer className="bg-slate-900 border-t border-slate-800 text-slate-400 text-xs py-6 mt-12 print-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center space-x-2">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+          <div className="flex items-center justify-center sm:justify-start space-x-2">
             <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-            <span className="font-semibold text-slate-300">
-              Technical Education & Vocational Training Authority (TEVTA)
+            <span className="font-semibold text-slate-200">
+              District Director Office TEVTA Faisalabad & Chiniot
             </span>
-            <span>•</span>
-            <span>District Director Office Faisalabad & Chiniot</span>
+            <span className="hidden sm:inline">•</span>
+            <span className="hidden sm:inline text-slate-400">Govt. of the Punjab</span>
           </div>
 
-          <div className="text-[11px] text-slate-500 text-center sm:text-right">
-            Non-Regular Staff Salary Management & Disbursement Engine (SMS-DES) • v1.0.0
+          <div className="text-xs text-slate-300 font-medium">
+            e-Salary Management System developed by <span className="font-bold text-amber-400">MKZ</span> for District Director Office TEVTA Faisalabad & Chiniot <span className="font-mono text-blue-400 font-semibold">v1.0</span>
           </div>
         </div>
       </footer>
@@ -183,6 +234,9 @@ export function App() {
         config={config}
         onSaveConfig={handleSaveConfig}
         onResetData={handleResetData}
+        onReplaySplash={() => setIsInitializing(true)}
+        theme={theme}
+        onToggleTheme={toggleTheme}
       />
 
     </div>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { UserSession } from '../types/payroll';
-import { Building2, Shield, Calendar, LogOut, Settings, Award } from 'lucide-react';
+import { Building2, Shield, Calendar, LogOut, Settings, Award, RefreshCw, Sun, Moon } from 'lucide-react';
+import { PunjabGovtEmblem, TevtaEmblem } from './Emblems';
 
 interface NavbarProps {
   session: UserSession;
@@ -10,6 +11,9 @@ interface NavbarProps {
   onOpenSettings: () => void;
   activeTab: 'INSTITUTE' | 'ADMIN';
   setActiveTab: (tab: 'INSTITUTE' | 'ADMIN') => void;
+  onReplaySplash?: () => void;
+  theme?: 'light' | 'dark';
+  onToggleTheme?: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -19,7 +23,10 @@ export const Navbar: React.FC<NavbarProps> = ({
   onLogout,
   onOpenSettings,
   activeTab,
-  setActiveTab
+  setActiveTab,
+  onReplaySplash,
+  theme = 'dark',
+  onToggleTheme
 }) => {
   return (
     <header className="sticky top-0 z-40 bg-slate-900/90 backdrop-blur-md border-b border-slate-800 text-white shadow-xl">
@@ -27,25 +34,38 @@ export const Navbar: React.FC<NavbarProps> = ({
         <div className="flex items-center justify-between h-20">
           
           {/* Brand & Emblem */}
-          <div className="flex items-center space-x-4">
-            <div className="w-12 h-12 rounded-xl bg-gradient-to-tr from-blue-700 via-indigo-600 to-emerald-500 p-0.5 shadow-lg shadow-blue-900/30 flex items-center justify-center">
-              <div className="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center">
-                <Building2 className="w-6 h-6 text-emerald-400" />
+          <div className="flex items-center space-x-3.5">
+            {/* Dual Logos (Govt of Punjab + TEVTA) */}
+            <div className="flex items-center -space-x-2 sm:space-x-1.5 shrink-0">
+              <div 
+                onClick={onReplaySplash} 
+                title="Government of the Punjab - Click to view initialization sequence"
+                className="w-11 h-11 rounded-xl bg-white p-1 shadow-md border border-emerald-500/40 flex items-center justify-center overflow-hidden cursor-pointer hover:scale-105 transition-transform"
+              >
+                <PunjabGovtEmblem className="w-full h-full object-contain" />
+              </div>
+              <div 
+                onClick={onReplaySplash} 
+                title="TEVTA Punjab - Click to view initialization sequence"
+                className="w-11 h-11 rounded-xl bg-white p-1 shadow-md border border-blue-500/40 flex items-center justify-center overflow-hidden cursor-pointer hover:scale-105 transition-transform"
+              >
+                <TevtaEmblem className="w-full h-full object-contain" />
               </div>
             </div>
+
             <div>
               <div className="flex items-center space-x-2">
-                <span className="text-xs font-semibold uppercase tracking-wider text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-800/60">
+                <span className="text-[10px] font-semibold uppercase tracking-wider text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-800/60">
                   Govt. of the Punjab
                 </span>
-                <span className="text-xs text-slate-400 font-mono">
-                  District Faisalabad & Chiniot
+                <span className="text-[11px] text-slate-400 font-mono hidden sm:inline-block">
+                  District Director Office TEVTA Faisalabad & Chiniot
                 </span>
               </div>
-              <h1 className="text-lg sm:text-xl font-bold font-heading text-slate-100 tracking-tight flex items-center gap-2">
-                TEVTA Salary Management System
-                <span className="hidden md:inline-block text-xs font-normal text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/40">
-                  SMS-DES v1.0
+              <h1 className="text-base sm:text-lg font-bold font-heading text-slate-100 tracking-tight flex items-center gap-2">
+                e-Salary Management System
+                <span className="inline-flex items-center gap-1 text-[10px] font-mono text-blue-300 bg-blue-950/70 px-2 py-0.5 rounded border border-blue-800/50">
+                  by <strong className="text-amber-400 font-bold">MKZ</strong> • v1.0
                 </span>
               </h1>
             </div>
@@ -85,6 +105,33 @@ export const Navbar: React.FC<NavbarProps> = ({
                   Institute Portal
                 </button>
               </div>
+            )}
+
+            {/* Light / Dark Mode Switcher Button */}
+            {onToggleTheme && (
+              <button
+                type="button"
+                onClick={onToggleTheme}
+                title={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+                aria-label={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+                className={`p-2 rounded-lg transition-all border flex items-center gap-1.5 text-xs font-semibold ${
+                  theme === 'dark'
+                    ? 'text-amber-400 hover:text-amber-300 bg-slate-800/80 hover:bg-slate-700/80 border-slate-700'
+                    : 'text-amber-700 hover:text-amber-800 bg-amber-50 hover:bg-amber-100 border-amber-300 shadow-sm'
+                }`}
+              >
+                {theme === 'dark' ? (
+                  <>
+                    <Sun className="w-4 h-4 text-amber-400 shrink-0" />
+                    <span className="hidden sm:inline-block">Light</span>
+                  </>
+                ) : (
+                  <>
+                    <Moon className="w-4 h-4 text-slate-700 shrink-0" />
+                    <span className="hidden sm:inline-block text-slate-700">Dark</span>
+                  </>
+                )}
+              </button>
             )}
 
             {/* User Session Profile & Login Button */}

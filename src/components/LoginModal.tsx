@@ -90,7 +90,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({
             </div>
             <div>
               <h2 className="text-lg font-bold text-white font-heading">Secure Access Gateway</h2>
-              <p className="text-xs text-slate-400">TEVTA District Salary Management & Disbursement</p>
+              <p className="text-xs text-slate-400">District Director Office TEVTA Faisalabad & Chiniot</p>
             </div>
           </div>
 
@@ -242,6 +242,11 @@ export const LoginModal: React.FC<LoginModalProps> = ({
               </button>
             </form>
           )}
+        </div>
+
+        {/* Owner branding signature */}
+        <div className="px-6 py-3 bg-slate-950/90 border-t border-slate-800 text-center text-[10px] sm:text-[11px] text-slate-400 font-mono">
+          e-Salary Management System developed by <span className="text-amber-400 font-bold">MKZ</span> for District Director Office TEVTA Faisalabad & Chiniot <span className="text-blue-400 font-semibold">v1.0</span>
         </div>
 
       </div>

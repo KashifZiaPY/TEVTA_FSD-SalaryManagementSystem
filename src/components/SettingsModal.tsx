@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { SystemConfig } from '../types/payroll';
-import { Settings, Save, RotateCcw, X, Cloud, Link2, CheckCircle2 } from 'lucide-react';
+import { Settings, Save, RotateCcw, X, Cloud, Link2, CheckCircle2, Play, Sun, Moon } from 'lucide-react';
 
 interface SettingsModalProps {
   isOpen: boolean;
@@ -8,6 +8,9 @@ interface SettingsModalProps {
   config: SystemConfig;
   onSaveConfig: (updated: SystemConfig) => void;
   onResetData: () => void;
+  onReplaySplash?: () => void;
+  theme?: 'light' | 'dark';
+  onToggleTheme?: () => void;
 }
 
 export const SettingsModal: React.FC<SettingsModalProps> = ({
@@ -15,7 +18,10 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
   onClose,
   config,
   onSaveConfig,
-  onResetData
+  onResetData,
+  onReplaySplash,
+  theme = 'dark',
+  onToggleTheme
 }) => {
   const [form, setForm] = useState<SystemConfig>({ ...config });
   const [savedToast, setSavedToast] = useState(false);
@@ -58,6 +64,48 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
               Settings updated successfully!
             </div>
           )}
+
+          {/* Light / Dark Mode Appearance Switch */}
+          <div className="bg-slate-950 p-3.5 rounded-xl border border-slate-800 flex items-center justify-between">
+            <div>
+              <div className="font-semibold text-slate-200 flex items-center gap-1.5">
+                {theme === 'dark' ? <Moon className="w-4 h-4 text-blue-400" /> : <Sun className="w-4 h-4 text-amber-500" />}
+                <span>Display Appearance</span>
+              </div>
+              <div className="text-[11px] text-slate-400 mt-0.5">
+                Switch between high-contrast Dark Mode and official Light Mode
+              </div>
+            </div>
+
+            {onToggleTheme && (
+              <div className="flex bg-slate-900 p-1 rounded-xl border border-slate-700/80 shadow-inner">
+                <button
+                  type="button"
+                  onClick={() => theme !== 'light' && onToggleTheme()}
+                  className={`px-3 py-1.5 rounded-lg font-semibold flex items-center gap-1.5 transition-all text-xs ${
+                    theme === 'light'
+                      ? 'bg-amber-500 text-slate-950 shadow-md font-bold'
+                      : 'text-slate-400 hover:text-slate-200'
+                  }`}
+                >
+                  <Sun className="w-3.5 h-3.5" />
+                  Light
+                </button>
+                <button
+                  type="button"
+                  onClick={() => theme !== 'dark' && onToggleTheme()}
+                  className={`px-3 py-1.5 rounded-lg font-semibold flex items-center gap-1.5 transition-all text-xs ${
+                    theme === 'dark'
+                      ? 'bg-blue-600 text-white shadow-md font-bold'
+                      : 'text-slate-400 hover:text-slate-200'
+                  }`}
+                >
+                  <Moon className="w-3.5 h-3.5" />
+                  Dark
+                </button>
+              </div>
+            )}
+          </div>
 
           {/* Apps Script Web App URL */}
           <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
@@ -147,20 +195,36 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
           </div>
 
           {/* Reset Baseline Data */}
-          <div className="pt-2 border-t border-slate-800 flex items-center justify-between">
-            <button
-              type="button"
-              onClick={() => {
-                if (confirm('Reset system data to official September 2026 baseline records?')) {
-                  onResetData();
-                  onClose();
-                }
-              }}
-              className="text-rose-400 hover:text-rose-300 flex items-center gap-1.5 text-xs font-semibold"
-            >
-              <RotateCcw className="w-3.5 h-3.5" />
-              Reset Baseline Data
-            </button>
+          <div className="pt-2 border-t border-slate-800 flex items-center justify-between flex-wrap gap-2">
+            <div className="flex items-center gap-3">
+              <button
+                type="button"
+                onClick={() => {
+                  if (confirm('Reset system data to official September 2026 baseline records?')) {
+                    onResetData();
+                    onClose();
+                  }
+                }}
+                className="text-rose-400 hover:text-rose-300 flex items-center gap-1.5 text-xs font-semibold"
+              >
+                <RotateCcw className="w-3.5 h-3.5" />
+                Reset Baseline Data
+              </button>
+
+              {onReplaySplash && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    onClose();
+                    onReplaySplash();
+                  }}
+                  className="text-amber-400 hover:text-amber-300 flex items-center gap-1.5 text-xs font-semibold"
+                >
+                  <Play className="w-3.5 h-3.5" />
+                  Startup Sequence
+                </button>
+              )}
+            </div>
 
             <div className="flex gap-2">
               <button
@@ -181,6 +245,11 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
           </div>
 
         </form>
+
+        {/* Owner branding signature */}
+        <div className="px-6 py-3 bg-slate-950/90 border-t border-slate-800 text-center text-[10px] sm:text-[11px] text-slate-400 font-mono">
+          e-Salary Management System developed by <span className="text-amber-400 font-bold">MKZ</span> for District Director Office TEVTA Faisalabad & Chiniot <span className="text-blue-400 font-semibold">v1.0</span>
+        </div>
 
       </div>
     </div>

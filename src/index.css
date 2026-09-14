@@ -1,11 +1,31 @@
 @import "tailwindcss";
 
+@variant dark (&:where(.dark, .dark *));
+
 @layer base {
   body {
-    @apply antialiased selection:bg-blue-600 selection:text-white bg-slate-950 text-slate-100;
+    @apply antialiased selection:bg-blue-600 selection:text-white transition-colors duration-150;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
   }
   
+  html.dark {
+    color-scheme: dark;
+  }
+
+  html.light {
+    color-scheme: light;
+  }
+
+  html.dark body {
+    background-color: #020617;
+    color: #f8fafc;
+  }
+
+  html.light body {
+    background-color: #f8fafc;
+    color: #0f172a;
+  }
+
   h1, h2, h3, h4, .font-heading {
     font-family: 'Outfit', 'Inter', sans-serif;
   }
@@ -13,6 +33,178 @@
   .font-mono-code {
     font-family: 'JetBrains Mono', monospace;
   }
+}
+
+/* ==========================================================================
+   LIGHT MODE ADAPTIVE STYLES
+   Transforms dark containers, borders, surfaces, inputs and text into a crisp,
+   official Punjab government light theme.
+   ========================================================================== */
+
+html.light header.sticky {
+  background-color: rgba(255, 255, 255, 0.95) !important;
+  border-bottom-color: #e2e8f0 !important;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05) !important;
+}
+
+html.light header.sticky h1 {
+  color: #0f172a !important;
+}
+
+html.light .bg-slate-900 {
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.06), 0 1px 2px -1px rgba(0, 0, 0, 0.04) !important;
+}
+
+html.light .bg-slate-900\/90 {
+  background-color: rgba(255, 255, 255, 0.96) !important;
+}
+
+html.light .bg-slate-950 {
+  background-color: #f8fafc !important;
+  border-color: #e2e8f0 !important;
+}
+
+html.light .bg-slate-950\/80,
+html.light .bg-slate-950\/70,
+html.light .bg-slate-950\/60,
+html.light .bg-slate-950\/50 {
+  background-color: #f1f5f9 !important;
+  border-color: #e2e8f0 !important;
+}
+
+html.light .bg-slate-800 {
+  background-color: #e2e8f0 !important;
+  border-color: #cbd5e1 !important;
+}
+
+html.light .bg-slate-800\/80,
+html.light .bg-slate-800\/60 {
+  background-color: #f1f5f9 !important;
+  border-color: #e2e8f0 !important;
+}
+
+/* Text adaptations in light mode */
+html.light .text-slate-100 {
+  color: #0f172a !important;
+}
+
+html.light .text-slate-200 {
+  color: #1e293b !important;
+}
+
+html.light .text-slate-300 {
+  color: #334155 !important;
+}
+
+html.light .text-slate-400 {
+  color: #64748b !important;
+}
+
+html.light .text-slate-500 {
+  color: #94a3b8 !important;
+}
+
+/* Borders in light mode */
+html.light .border-slate-800,
+html.light .border-slate-800\/60,
+html.light .border-slate-800\/40 {
+  border-color: #e2e8f0 !important;
+}
+
+html.light .border-slate-700,
+html.light .border-slate-700\/60 {
+  border-color: #cbd5e1 !important;
+}
+
+/* Inputs, selects, and textareas in light mode */
+html.light input:not([type="checkbox"]):not([type="radio"]),
+html.light select,
+html.light textarea {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border-color: #cbd5e1 !important;
+}
+
+html.light input:focus,
+html.light select:focus,
+html.light textarea:focus {
+  border-color: #2563eb !important;
+  background-color: #ffffff !important;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15) !important;
+}
+
+/* Table rows in light mode */
+html.light tr.bg-slate-950\/80 {
+  background-color: #f8fafc !important;
+  color: #475569 !important;
+  border-bottom-color: #e2e8f0 !important;
+}
+
+html.light tbody tr:hover {
+  background-color: #f8fafc !important;
+}
+
+html.light tbody tr {
+  border-bottom-color: #e2e8f0 !important;
+}
+
+/* Modal Backdrops in light mode */
+html.light .bg-slate-950\/85,
+html.light .bg-slate-950\/80 {
+  background-color: rgba(15, 23, 42, 0.4) !important;
+}
+
+/* Modal Surface in light mode */
+html.light .bg-slate-900.border.border-slate-800 {
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Badge Tweaks in light mode for crisp contrast */
+html.light .bg-emerald-950\/60 {
+  background-color: #ecfdf5 !important;
+  border-color: #a7f3d0 !important;
+  color: #065f46 !important;
+}
+
+html.light .bg-blue-950\/60 {
+  background-color: #eff6ff !important;
+  border-color: #bfdbfe !important;
+  color: #1e40af !important;
+}
+
+html.light .bg-amber-950\/60 {
+  background-color: #fffbeb !important;
+  border-color: #fde68a !important;
+  color: #92400e !important;
+}
+
+html.light .bg-rose-950\/60 {
+  background-color: #fff1f2 !important;
+  border-color: #fecdd3 !important;
+  color: #9f1239 !important;
+}
+
+/* Scrollbar tweaks in light mode */
+html.light ::-webkit-scrollbar-track {
+  background: rgba(241, 245, 249, 0.8) !important;
+}
+
+html.light ::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.6) !important;
+  border: 2px solid rgba(241, 245, 249, 0.8) !important;
+}
+
+html.light .table-scrollbar::-webkit-scrollbar-track {
+  background: rgba(241, 245, 249, 0.9) !important;
+}
+
+html.light .table-scrollbar::-webkit-scrollbar-thumb {
+  background: #3b82f6 !important;
+  border: 2px solid #f1f5f9 !important;
 }
 
 /* Custom sleek scrollbars */
