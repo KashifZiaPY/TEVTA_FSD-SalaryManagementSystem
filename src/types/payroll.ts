@@ -4,6 +4,8 @@ export type EmployeeCategory = 'Skilled' | 'Semi-Skilled' | 'Un-Skilled';
 
 export type SubmissionStatus = 'Draft' | 'Submitted' | 'Approved' | 'Disbursed';
 
+export type StaffStatus = 'Active' | 'Relieved' | 'Expired' | 'On Leave';
+
 export interface Institute {
   code: string;
   name: string;
@@ -38,7 +40,11 @@ export interface StaffMember {
   bankBranch: string;
   branchCode: string;
   bankAccount: string; // Stored as 16-digit text
-  status: 'Active' | 'Relieved' | 'Expired';
+  status: StaffStatus;
+  photoUrl?: string;
+  phone?: string;
+  email?: string;
+  notes?: string;
 }
 
 export interface MonthlyTransaction {
@@ -53,6 +59,7 @@ export interface MonthlyTransaction {
   practicalHours: number;
   grossSalary: number;
   deductions: number;
+  allowances?: number;
   netSalary: number;
   status: SubmissionStatus;
   submittedBy?: string;
@@ -92,3 +99,4 @@ export interface AuditAlert {
   instituteName?: string;
   cnic?: string;
 }
+

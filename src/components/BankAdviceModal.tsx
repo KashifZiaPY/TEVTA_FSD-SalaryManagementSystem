@@ -34,17 +34,19 @@ export const BankAdviceModal: React.FC<BankAdviceModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-slate-950/85 backdrop-blur-md overflow-y-auto animate-in fade-in">
-      <div className="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-5xl shadow-2xl overflow-hidden my-auto max-h-[95vh] flex flex-col">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-slate-950/80 backdrop-blur-md overflow-y-auto animate-in fade-in">
+      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl w-full max-w-5xl shadow-2xl overflow-hidden my-auto max-h-[95vh] flex flex-col">
         
         {/* Controls Toolbar (Hidden in Print) */}
-        <div className="p-4 bg-slate-950 border-b border-slate-800 flex flex-wrap items-center justify-between gap-4 print-hidden">
+        <div className="p-4 bg-slate-50 dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 flex flex-wrap items-center justify-between gap-4 print-hidden">
           <div className="flex items-center space-x-3">
-            <div className="flex bg-slate-900 p-1 rounded-xl border border-slate-800 text-xs">
+            <div className="flex bg-slate-200 dark:bg-slate-900 p-1 rounded-xl border border-slate-300 dark:border-slate-800 text-xs">
               <button
                 onClick={() => setAdviceType('Daily Wages')}
                 className={`px-3 py-1.5 rounded-lg font-semibold transition-all ${
-                  adviceType === 'Daily Wages' ? 'bg-blue-600 text-white' : 'text-slate-400 hover:text-white'
+                  adviceType === 'Daily Wages' 
+                    ? 'bg-indigo-600 text-white shadow-sm' 
+                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                 }`}
               >
                 Daily Wages Advice (A/C: {config.tevtaDwAccount})
@@ -52,7 +54,9 @@ export const BankAdviceModal: React.FC<BankAdviceModalProps> = ({
               <button
                 onClick={() => setAdviceType('Visiting Faculty')}
                 className={`px-3 py-1.5 rounded-lg font-semibold transition-all ${
-                  adviceType === 'Visiting Faculty' ? 'bg-teal-600 text-white' : 'text-slate-400 hover:text-white'
+                  adviceType === 'Visiting Faculty' 
+                    ? 'bg-teal-600 text-white shadow-sm' 
+                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                 }`}
               >
                 Visiting Staff Advice (A/C: {config.tevtaVisitingAccount})
@@ -70,7 +74,7 @@ export const BankAdviceModal: React.FC<BankAdviceModalProps> = ({
             </button>
             <button
               onClick={onClose}
-              className="text-slate-400 hover:text-white p-2 rounded-lg hover:bg-slate-800 transition-colors"
+              className="text-slate-400 hover:text-slate-700 dark:hover:text-white p-2 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors"
             >
               <X className="w-5 h-5" />
             </button>

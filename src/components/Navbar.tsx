@@ -29,80 +29,75 @@ export const Navbar: React.FC<NavbarProps> = ({
   onToggleTheme
 }) => {
   return (
-    <header className="sticky top-0 z-40 bg-slate-900/90 backdrop-blur-md border-b border-slate-800 text-white shadow-xl">
+    <header className="sticky top-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white shadow-sm transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
+        <div className="flex flex-wrap md:flex-nowrap items-center justify-between min-h-[4.25rem] py-2 gap-3">
           
-          {/* Brand & Emblem */}
-          <div className="flex items-center space-x-3.5">
-            {/* Dual Logos (Govt of Punjab + TEVTA) */}
-            <div className="flex items-center -space-x-2 sm:space-x-1.5 shrink-0">
-              <div 
-                onClick={onReplaySplash} 
-                title="Government of the Punjab - Click to view initialization sequence"
-                className="w-11 h-11 rounded-xl bg-white p-1 shadow-md border border-emerald-500/40 flex items-center justify-center overflow-hidden cursor-pointer hover:scale-105 transition-transform"
-              >
-                <PunjabGovtEmblem className="w-full h-full object-contain" />
-              </div>
-              <div 
-                onClick={onReplaySplash} 
-                title="TEVTA Punjab - Click to view initialization sequence"
-                className="w-11 h-11 rounded-xl bg-white p-1 shadow-md border border-blue-500/40 flex items-center justify-center overflow-hidden cursor-pointer hover:scale-105 transition-transform"
-              >
-                <TevtaEmblem className="w-full h-full object-contain" />
-              </div>
-            </div>
-
-            <div>
-              <div className="flex items-center space-x-2">
-                <span className="text-[10px] font-semibold uppercase tracking-wider text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-800/60">
+          {/* Top Headings with TEVTA Emblem on the Right */}
+          <div className="flex items-center gap-3 min-w-0 shrink">
+            {/* Entity Title & Identity */}
+            <div className="min-w-0">
+              <div className="flex flex-wrap items-center gap-1.5 mb-0.5">
+                <span className="text-[10px] font-semibold uppercase tracking-wider text-indigo-700 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/60 px-1.5 py-0.5 rounded border border-indigo-200 dark:border-indigo-800/60 shrink-0">
+                  TEVTA Punjab
+                </span>
+                <span className="text-[10px] font-semibold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/60 px-1.5 py-0.5 rounded border border-emerald-200 dark:border-emerald-800/60 shrink-0">
                   Govt. of the Punjab
                 </span>
-                <span className="text-[11px] text-slate-400 font-mono hidden sm:inline-block">
-                  District Director Office TEVTA Faisalabad & Chiniot
+                <span className="text-[11px] text-slate-500 dark:text-slate-400 font-mono hidden xl:inline-block truncate">
+                  District Director Office Faisalabad & Chiniot
                 </span>
               </div>
-              <h1 className="text-base sm:text-lg font-bold font-heading text-slate-100 tracking-tight flex items-center gap-2">
-                e-Salary Management System
-                <span className="inline-flex items-center gap-1 text-[10px] font-mono text-blue-300 bg-blue-950/70 px-2 py-0.5 rounded border border-blue-800/50">
-                  by <strong className="text-amber-400 font-bold">MKZ</strong> • v1.0
+              <h1 className="text-sm sm:text-base lg:text-lg font-bold font-heading text-slate-900 dark:text-slate-100 tracking-tight flex flex-wrap items-center gap-1.5">
+                <span className="truncate">e-Salary Management System</span>
+                <span className="inline-flex items-center gap-1 text-[10px] font-mono text-indigo-700 dark:text-indigo-300 bg-indigo-50 dark:bg-indigo-950/70 px-1.5 py-0.5 rounded border border-indigo-200 dark:border-indigo-800/50 shrink-0">
+                  by <strong className="text-amber-600 dark:text-amber-400 font-bold">MKZ</strong> • v1.0
                 </span>
               </h1>
+            </div>
+
+            {/* TEVTA Emblem - positioned on the RIGHT side of top headings */}
+            <div 
+              onClick={onReplaySplash} 
+              title="TEVTA Punjab - Click to view initialization sequence"
+              className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-white p-1.5 shadow-sm border border-indigo-200 dark:border-indigo-800/60 flex items-center justify-center shrink-0 cursor-pointer hover:scale-105 transition-transform"
+            >
+              <TevtaEmblem className="w-full h-full object-contain" />
             </div>
           </div>
 
           {/* Navigation Controls & Role Badges */}
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center gap-2 sm:gap-2.5 shrink-0 ml-auto">
             {/* Active Month Indicator */}
-            <div className="hidden lg:flex items-center space-x-2 bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700 text-xs text-slate-300">
-              <Calendar className="w-4 h-4 text-blue-400" />
-              <span className="font-semibold text-slate-200">{activeMonth}</span>
+            <div className="hidden md:flex items-center space-x-2 bg-slate-100 dark:bg-slate-800/80 px-2.5 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 text-xs text-slate-700 dark:text-slate-300">
+              <Calendar className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
+              <span className="font-semibold text-slate-900 dark:text-slate-200">{activeMonth}</span>
             </div>
 
             {/* View Switcher (Admin Mode) */}
             {session.role === 'DISTRICT_ADMIN' && (
-              <div className="flex bg-slate-800 p-1 rounded-lg border border-slate-700 text-xs">
+              <div className="flex bg-slate-100 dark:bg-slate-800 p-1 rounded-xl border border-slate-200 dark:border-slate-700 text-xs">
                 <button
                   onClick={() => setActiveTab('ADMIN')}
-                  className={`px-3 py-1.5 rounded-md font-semibold transition-all flex items-center gap-1.5 ${
+                  className={`px-2.5 sm:px-3 py-1.5 rounded-lg font-semibold transition-all flex items-center gap-1 ${
                     activeTab === 'ADMIN'
-                      ? 'bg-blue-600 text-white shadow'
-                      : 'text-slate-400 hover:text-white'
+                      ? 'bg-indigo-600 text-white shadow-sm'
+                      : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                   }`}
                 >
                   <Shield className="w-3.5 h-3.5" />
-                  DD Executive Hub
+                  <span className="hidden sm:inline">DD Executive</span> Hub
                 </button>
                 <button
                   onClick={() => setActiveTab('INSTITUTE')}
-                  className={`px-3 py-1.5 rounded-md font-semibold transition-all flex items-center gap-1.5 ${
+                  className={`px-2.5 sm:px-3 py-1.5 rounded-lg font-semibold transition-all flex items-center gap-1 ${
                     activeTab === 'INSTITUTE'
-                      ? 'bg-emerald-600 text-white shadow'
-                      : 'text-slate-400 hover:text-white'
+                      ? 'bg-emerald-600 text-white shadow-sm'
+                      : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                   }`}
                 >
                   <Building2 className="w-3.5 h-3.5" />
-                  Institute Portal
+                  <span className="hidden sm:inline">Institute</span> Portal
                 </button>
               </div>
             )}
@@ -138,24 +133,24 @@ export const Navbar: React.FC<NavbarProps> = ({
             {session.role === 'GUEST' ? (
               <button
                 onClick={onOpenLogin}
-                className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-xs sm:text-sm font-semibold px-4 py-2 rounded-lg shadow-md transition-all flex items-center gap-2"
+                className="bg-indigo-600 hover:bg-indigo-500 text-white text-xs sm:text-sm font-semibold px-3.5 py-2 rounded-xl shadow-sm transition-all flex items-center gap-1.5"
               >
                 <Shield className="w-4 h-4" />
-                Institute / Admin Login
+                <span>Login</span>
               </button>
             ) : (
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-1.5 sm:space-x-2">
                 <div className="hidden md:block text-right">
-                  <div className="text-xs font-semibold text-slate-200 flex items-center justify-end gap-1">
+                  <div className="text-xs font-semibold text-slate-800 dark:text-slate-200 flex items-center justify-end gap-1">
                     {session.role === 'DISTRICT_ADMIN' ? (
-                      <span className="text-amber-400 font-bold flex items-center gap-1">
-                        <Award className="w-3.5 h-3.5" /> DD Office Admin
+                      <span className="text-amber-600 dark:text-amber-400 font-bold flex items-center gap-1">
+                        <Award className="w-3.5 h-3.5" /> DD Admin
                       </span>
                     ) : (
-                      <span>{session.instituteName || session.userName}</span>
+                      <span className="truncate max-w-[150px]">{session.instituteName || session.userName}</span>
                     )}
                   </div>
-                  <div className="text-[11px] text-slate-400 font-mono">
+                  <div className="text-[11px] text-slate-500 dark:text-slate-400 font-mono">
                     Code: {session.instituteCode || 'Central'}
                   </div>
                 </div>
@@ -163,7 +158,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <button
                   onClick={onOpenSettings}
                   title="System Settings & Google Sheet Sync"
-                  className="p-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors border border-transparent hover:border-slate-700"
+                  className="p-2 text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors border border-transparent hover:border-slate-300 dark:hover:border-slate-700"
                 >
                   <Settings className="w-4 h-4" />
                 </button>
@@ -171,7 +166,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <button
                   onClick={onLogout}
                   title="Logout Session"
-                  className="p-2 text-rose-400 hover:text-rose-300 hover:bg-rose-950/40 rounded-lg transition-colors border border-transparent hover:border-rose-900/50"
+                  className="p-2 text-rose-600 dark:text-rose-400 hover:text-rose-700 dark:hover:text-rose-300 hover:bg-rose-50 dark:hover:bg-rose-950/40 rounded-lg transition-colors border border-transparent hover:border-rose-200 dark:hover:border-rose-900/50"
                 >
                   <LogOut className="w-4 h-4" />
                 </button>

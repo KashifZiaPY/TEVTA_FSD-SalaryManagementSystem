@@ -71,3 +71,24 @@ export function formatPKR(num: number): string {
   if (num === null || num === undefined || isNaN(num)) return "0";
   return new Intl.NumberFormat("en-PK").format(num);
 }
+
+/**
+ * Calculates Gross Salary for Daily Wages Staff
+ */
+export function calculateDailyWagesGross(workingDays: number, dailyRate: number): number {
+  return Math.round((workingDays || 0) * (dailyRate || 0));
+}
+
+/**
+ * Calculates Gross Honorarium for Visiting Faculty
+ */
+export function calculateVisitingGross(
+  theoryHours: number, 
+  practicalHours: number, 
+  theoryRate: number, 
+  practicalRate: number
+): number {
+  const theoryAmt = (theoryHours || 0) * (theoryRate || 0);
+  const practicalAmt = (practicalHours || 0) * (practicalRate || 0);
+  return Math.round(theoryAmt + practicalAmt);
+}

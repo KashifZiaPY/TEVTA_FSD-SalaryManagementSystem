@@ -65,11 +65,80 @@ export const AnimatedSplashLogos: React.FC<AnimatedSplashLogosProps> = ({
         {/* Ambient background soft glow */}
         <div className="absolute w-72 sm:w-96 h-36 bg-emerald-600/10 dark:bg-emerald-500/15 rounded-full blur-3xl pointer-events-none -z-10" />
 
-        {/* LEFT: Government of the Punjab Circular Logo with Emerald Green Halo */}
+        {/* LEFT: TEVTA Logo with Blue / Indigo Halo (Positioned on Left per User Specification) */}
         <div className="flex flex-col items-center">
           <div className="relative w-20 h-20 sm:w-24 sm:h-24 md:w-26 md:h-26 flex items-center justify-center">
             {/* Soft Breathing Ambient Glow */}
-            <div className="absolute inset-0 rounded-full bg-emerald-500/20 dark:bg-emerald-500/25 blur-xl splash-halo-pulse pointer-events-none" />
+            <div className="absolute inset-0 rounded-2xl bg-indigo-500/20 dark:bg-indigo-500/25 blur-xl splash-halo-pulse pointer-events-none" />
+
+            {/* Slow Rotating Blue / Indigo Halo Ring */}
+            <svg
+              className="absolute -inset-2 sm:-inset-2.5 w-[calc(100%+16px)] sm:w-[calc(100%+20px)] h-[calc(100%+16px)] sm:h-[calc(100%+20px)] splash-rotate-ccw pointer-events-none"
+              viewBox="0 0 100 100"
+            >
+              <defs>
+                <linearGradient id="tevtaHaloGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#4f46e5" stopOpacity="0.95" />
+                  <stop offset="45%" stopColor="#38bdf8" stopOpacity="0.75" />
+                  <stop offset="75%" stopColor="#6366f1" stopOpacity="0.3" />
+                  <stop offset="100%" stopColor="#4f46e5" stopOpacity="0" />
+                </linearGradient>
+              </defs>
+              <circle
+                cx="50"
+                cy="50"
+                r="44"
+                fill="none"
+                stroke="url(#tevtaHaloGradient)"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeDasharray="175 95"
+              />
+            </svg>
+
+            {/* Perfectly Fitted Frame: generous padding and rounded-2xl prevents upper corner trimming of TEVTA emblem */}
+            <div
+              className={`relative w-full h-full rounded-2xl p-2 sm:p-2.5 flex items-center justify-center transition-all ${
+                darkMode
+                  ? 'bg-white border border-indigo-500/40 shadow-[0_4px_24px_rgba(79,70,229,0.25)]'
+                  : 'bg-white border border-indigo-300 shadow-[0_4px_20px_rgba(79,70,229,0.15)]'
+              }`}
+            >
+              {!tevtaFailed ? (
+                <img
+                  src={tvLogoSrc}
+                  alt="TEVTA Punjab Logo"
+                  className="w-full h-full object-contain"
+                  onError={() => setTevtaFailed(true)}
+                  referrerPolicy="no-referrer"
+                />
+              ) : (
+                <TevtaEmblem className="w-full h-full" />
+              )}
+            </div>
+          </div>
+          <span className="text-[10px] font-extrabold uppercase font-mono tracking-wider mt-2.5 text-indigo-600 dark:text-indigo-400">
+            TEVTA PUNJAB
+          </span>
+        </div>
+
+        {/* CENTER: Dynamic Linking Sync Beam Line */}
+        <div className="relative w-16 sm:w-28 md:w-36 h-3 mx-2 sm:mx-4 flex items-center justify-center overflow-visible">
+          {/* Base hairline track */}
+          <div
+            className={`w-full h-0.5 rounded-full ${
+              darkMode ? 'bg-slate-700/60' : 'bg-slate-300'
+            }`}
+          />
+          {/* Moving reciprocating laser pulse */}
+          <div className="absolute h-1 w-7 sm:w-10 rounded-full splash-sync-beam" />
+        </div>
+
+        {/* RIGHT: Government of the Punjab Circular Logo with Emerald Green Halo (Shifted to Right) */}
+        <div className="flex flex-col items-center">
+          <div className="relative w-20 h-20 sm:w-24 sm:h-24 md:w-26 md:h-26 flex items-center justify-center">
+            {/* Soft Breathing Ambient Glow */}
+            <div className="absolute inset-0 rounded-2xl bg-emerald-500/20 dark:bg-emerald-500/25 blur-xl splash-halo-pulse pointer-events-none" />
 
             {/* Slow Rotating Emerald Green Halo Ring */}
             <svg
@@ -96,9 +165,9 @@ export const AnimatedSplashLogos: React.FC<AnimatedSplashLogosProps> = ({
               />
             </svg>
 
-            {/* Subtle Circular Frame */}
+            {/* Matching Rounded-2xl Frame: exact same shape as TEVTA logo */}
             <div
-              className={`relative w-full h-full rounded-full p-2 sm:p-2.5 flex items-center justify-center overflow-hidden transition-all ${
+              className={`relative w-full h-full rounded-2xl p-2 sm:p-2.5 flex items-center justify-center transition-all ${
                 darkMode
                   ? 'bg-white border border-emerald-500/30 shadow-[0_4px_24px_rgba(16,185,129,0.25)]'
                   : 'bg-white border border-emerald-400/40 shadow-[0_4px_20px_rgba(16,185,129,0.15)]'
@@ -108,7 +177,7 @@ export const AnimatedSplashLogos: React.FC<AnimatedSplashLogosProps> = ({
                 <img
                   src={pbLogoSrc}
                   alt="Government of the Punjab Logo"
-                  className="w-full h-full object-contain rounded-full"
+                  className="w-full h-full object-contain"
                   onError={() => setPunjabFailed(true)}
                   referrerPolicy="no-referrer"
                 />
@@ -119,75 +188,6 @@ export const AnimatedSplashLogos: React.FC<AnimatedSplashLogosProps> = ({
           </div>
           <span className="text-[10px] font-extrabold uppercase font-mono tracking-wider mt-2.5 text-emerald-600 dark:text-emerald-400">
             GOVT. OF PUNJAB
-          </span>
-        </div>
-
-        {/* CENTER: Dynamic Linking Sync Beam Line */}
-        <div className="relative w-16 sm:w-28 md:w-36 h-3 mx-2 sm:mx-4 flex items-center justify-center overflow-visible">
-          {/* Base hairline track */}
-          <div
-            className={`w-full h-0.5 rounded-full ${
-              darkMode ? 'bg-slate-700/60' : 'bg-slate-300'
-            }`}
-          />
-          {/* Moving reciprocating laser pulse */}
-          <div className="absolute h-1 w-7 sm:w-10 rounded-full splash-sync-beam" />
-        </div>
-
-        {/* RIGHT: TEVTA Circular Logo with Blue Halo */}
-        <div className="flex flex-col items-center">
-          <div className="relative w-20 h-20 sm:w-24 sm:h-24 md:w-26 md:h-26 flex items-center justify-center">
-            {/* Soft Breathing Ambient Glow */}
-            <div className="absolute inset-0 rounded-full bg-blue-500/20 dark:bg-blue-500/25 blur-xl splash-halo-pulse pointer-events-none" />
-
-            {/* Slow Rotating Blue Halo Ring */}
-            <svg
-              className="absolute -inset-2 sm:-inset-2.5 w-[calc(100%+16px)] sm:w-[calc(100%+20px)] h-[calc(100%+16px)] sm:h-[calc(100%+20px)] splash-rotate-ccw pointer-events-none"
-              viewBox="0 0 100 100"
-            >
-              <defs>
-                <linearGradient id="tevtaHaloGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#2563eb" stopOpacity="0.95" />
-                  <stop offset="45%" stopColor="#38bdf8" stopOpacity="0.75" />
-                  <stop offset="75%" stopColor="#60a5fa" stopOpacity="0.3" />
-                  <stop offset="100%" stopColor="#2563eb" stopOpacity="0" />
-                </linearGradient>
-              </defs>
-              <circle
-                cx="50"
-                cy="50"
-                r="44"
-                fill="none"
-                stroke="url(#tevtaHaloGradient)"
-                strokeWidth="2.5"
-                strokeLinecap="round"
-                strokeDasharray="175 95"
-              />
-            </svg>
-
-            {/* Subtle Circular Frame */}
-            <div
-              className={`relative w-full h-full rounded-full p-2 sm:p-2.5 flex items-center justify-center overflow-hidden transition-all ${
-                darkMode
-                  ? 'bg-white border border-blue-500/30 shadow-[0_4px_24px_rgba(37,99,235,0.25)]'
-                  : 'bg-white border border-blue-400/40 shadow-[0_4px_20px_rgba(37,99,235,0.15)]'
-              }`}
-            >
-              {!tevtaFailed ? (
-                <img
-                  src={tvLogoSrc}
-                  alt="TEVTA Punjab Logo"
-                  className="w-full h-full object-contain rounded-full"
-                  onError={() => setTevtaFailed(true)}
-                  referrerPolicy="no-referrer"
-                />
-              ) : (
-                <TevtaEmblem className="w-full h-full" />
-              )}
-            </div>
-          </div>
-          <span className="text-[10px] font-extrabold uppercase font-mono tracking-wider mt-2.5 text-blue-600 dark:text-blue-400">
-            TEVTA PUNJAB
           </span>
         </div>
       </div>
